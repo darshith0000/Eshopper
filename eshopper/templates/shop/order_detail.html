@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load cms_tags staticfiles sekizai_tags menu_tags %}
+{% load shop_tags %}
+{% block content %}
+
+  <h1>
+   <center><u>{{ order }}</u></center>
+</h1>
+<section id="cart_items">
+   <div class="container">
+      <div class="breadcrumbs">
+         <ol class="breadcrumb">
+             <li><a href="/">Home</a></li>
+             <li><a href="/shop/orders/">Order History List </a></li>
+            <li class="active"> Each Order History</li>
+         </ol>
+      </div>
+      <!--/breadcrums-->
+      <div class="">
+         <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-3">
+               <div class="bill-to">
+                  <p><b><u>Billing Address:</u></b><br>
+
+                     {{ order.billing_address_text }}
+                  </p>
+
+                  <!--<p>{{order.billing_address_text}}</p>-->
+                  <p><b><u>Shipping Address:</u></b><br>
+
+                     {{ order.shipping_address_text }}
+                  </p>
+
+                  <!--{{order.shipping_address_text}}</p>-->
+                  <div class="form-two">
+                  </div>
+
+               </div>
+            </div>
+            <!--<div class="col-sm-4">-->
+               <!--<div class="order-message">-->
+                  <!--<p>Shipping Order</p>-->
+                  <!--<textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>-->
+               <!--</div>-->
+            <!--</div>-->
+             <div class="col-sm-4">
+             <h2><b><u>Your Payment Details:</u></b></h2>
+            <div class="total_area">
+
+               <ul>
+                  <li>Order Sub Total <span>{{ order.order_subtotal }}</span></li>
+
+                  <li>Shipping Cost <span>Free</span></li>
+                  <li>Sum Total <span>{{ order.order_total }}</span></li>
+                  <!--<a class="btn btn-primary" href="/shop/pay/braintree" ></a>-->
+               </ul>
+               <!--<a class="btn btn-primary element.style" href="/shop/pay/braintree" >Continue</a>-->
+            </div>
+         </div>
+         </div>
+      </div>
+       <div class="container">
+      <div class="row">
+         <div class="col-sm-6">
+         </div>
+
+
+      </div>
+   </div>
+      <div class="review-payment">
+         <h2><b><u> Items of {{order}}</u></b></h2>
+      </div>
+      <div class="table-responsive cart_info">
+         <table class="table table-condensed">
+            <thead>
+               <tr class="cart_menu">
+                  <td class="image">Image</td>
+                  <td class="description">Item</td>
+                  <td class="price">Price</td>
+                  <td class="quantity">Quantity</td>
+                  <td class="total">Total</td>
+                  <td></td>
+               </tr>
+            </thead>
+            <tbody>
+
+               {% for order_item in order.items.all %}
+               <tr>
+                  <td class="cart_product">
+                     <a href=""><img src="/static/{{ order_item.product.image }}" alt=""></a>
+                  </td>
+                  <td class="cart_description">
+                     <h4><a href="">{{ order_item.product_name }}</a></h4>
+                     <p>Web ID: {{ order_item.product_id }}</p>
+                  </td>
+                  <td class="cart_price">
+                     <p>{{ order_item.unit_price }}</p>
+                  </td>
+                  <td class="cart_quantity">
+                     <div class="class_quantity_button">
+                        <p>{{ order_item.quantity }}</p>
+                     </div>
+                  </td>
+                  <td class="cart_total">
+                     <p class="cart_total_price">{{ order_item.line_total }}</p>
+                  </td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+      <div class="payment-options">
+      </div>
+   </div>
+</section>
+<!--/#cart_items-->
+<section id="do_action">
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-6">
+         </div>
+
+
+      </div>
+   </div>
+</section>
+<!--/#do_action-->
+
+{% endblock %}

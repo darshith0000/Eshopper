@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load wishlist_tags %}
+{% block content %}
+<section>
+<div class="container">
+   {% if object_list %}
+   <section id="cart_items">
+   <div class="shopper-info">
+      <p> My Wishlist</p>
+      <div class="table-responsive cart_info">
+         <table class="table table-condensed">
+            <thead>
+               <tr class="cart_menu">
+                  <td class="image">Item Id</td>
+                  <td class="description">Get Details</td>
+               </tr>
+            </thead>
+            <tbody>
+               {% for wishlist_item in object_list %}
+               <tr>
+                  <td class="cart_product">
+                     <p>Web ID: {{ wishlist_item.item_id }}</p>
+                  </td>
+                  <td class="cart_total">
+                     <ul class="nav nav-pills nav-justified">
+                        <li>
+                           <p><a class="btn btn-primary" href="{{ wishlist_item.get_absolute_url }}"><i class="fa fa-shopping-cart"></i>Get Details</a></p>
+                        </li>
+                        <li>
+                           <form action="/en/wishlist/{{wishlist_item.id}}/remove/" method="post">{% csrf_token %}
+                              <button type="submit" class="btn btn-primary">remove</button>
+                           </form>
+                        </li>
+                  </td>
+                  </ul>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+      <a href="/">Add more item to wishlist</a>
+   </div>
+   {% else %}
+   <p>No items in wishlist</p>
+   <a href="/">Add item to wishlist</a>
+   {% endif %}
+</div>
+{% endblock content %}

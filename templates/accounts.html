@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+{% load cms_tags staticfiles sekizai_tags menu_tags %}
+{% load shop_tags %}
+{% load url from future %}
+{% load wishlist_tags %}
+{% block content %}
+<!--{#-->
+<!--<div class="jumbotron">#}-->
+<!--{#  {% placeholder "feature" %}#}-->
+<!--{#-->
+<!--</div>-->
+<!--#}-->
+<div>
+<div class="header-bottom">
+<!--header-bottom-->
+<div class="container">
+   <div class="row">
+      <div class="col-sm-9">
+         <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+         </div>
+         <div class="mainmenu pull-left">
+            <ul class="nav navbar-nav collapse navbar-collapse">
+               <li><a href="/" class="active">Home</a></li>
+               <li class="dropdown">
+                  <a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                  <ul role="menu" class="sub-menu">
+                     <li><a href="{% url 'checkout_selection' %}">Checkout</a></li>
+                     <li><a href="{% url 'cart' %}">Cart</a></li>
+                     <li><a href="">Product Details</a></li>
+                     {% if user.is_authenticated == True %}
+                     <li><a href="{% url 'order_list' %}">Your Orders</a></li>
+                     <li><a href="{% url 'logout' %}"><i class="fa fa-lock"></i> Logout</a></li>
+                     <li><a href="#">{{ user.username }}</a></li>
+                     {% else %}
+                     <li><a href="{% url 'account_login' %}"><i class="fa fa-lock"></i> Login</a></li>
+                     <li><a href="{% url 'signup' %}"><i class="fa fa-user"></i> Sign Up</a></li>
+                     {% endif %}
+                     <!--<li><a href="{% url "account_login" %}">Login</a></li>-->
+                  </ul>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</div>
+<section>
+   <div>
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-2">
+               <div class="single-widget">
+                  <h2>My Account</h2>
+                  <ul class="nav nav-pills nav-stacked">
+                     <li><a id="#" onclick="dashboard()">DashBoard</a></li>
+                     <li><a href="#" onclick="information()">Information</a></li>
+                     <li><a href="#" onclick="address()">Address</a></li>
+                     <li><a href="#" onclick="orders()">Orders</a></li>
+                     <li><a href="#" onclick="wishlist()">Wishlists</a></li>
+                     <li><a href="#" onclick="creditcard()">Credit Cards</a></li>
+                     <li><a href="#">Store Credit</a></li>
+                     <li><a href="#">Gift Card</a></li>
+                  </ul>
+               </div>
+            </div>
+            <div id="div_dashboard" class="features_items" style="display: block">
+               <div class="col-sm-3">
+                  <div class="shopper-info">
+                     <p>Shopper Information</p>
+                     <form>
+                        <input type="text" placeholder="First Name">
+                        <input type="text" placeholder="Last Name">
+                        <input type="text" placeholder="Mobile">
+                        <input type="text" placeholder="other number">
+                     </form>
+                     <!--<a class="btn btn-primary" href="">Get Quotes</a>-->
+                     <a class="btn btn-primary" href="#">Update</a>
+                  </div>
+               </div>
+            </div>
+            <div id="div_information" class="features_items" style="display: none">
+               <div class="shopper-info">
+                  <p>Shopper Information</p>
+               </div>
+            </div>
+            <div id="div_address" class="features_items" style="display: none">
+               <div class="shopper-info">
+                  <p>Shopper Address</p>
+               </div>
+            </div>
+            <div id="div_orders" class="features_items" style="display: none">
+               <div class="shopper-info">
+                  <p>My Orders</p>
+                  <section id="cart_items">
+                  <div class="table-responsive cart_info">
+                     <table class="table table-condensed">
+                        <thead>
+                           <tr class="cart_menu">
+                              <td class="image">Order Id</td>
+                              <td class="description">Date&Time</td>
+                              <td class="total">Total</td>
+                              <!--<td class="quantity">Quantity</td>-->
+                              <!--<td class="total">Total</td>-->
+                              <td class="description">Get Details</td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for order in orders %}
+                           <tr>
+                              <td class="cart_product">
+                                 <p>Web ID: {{ order.id }}</p>
+                              </td>
+                              <td class="cart_description">
+                                 <p> {{ order.modified }}</p>
+                              </td>
+                              <td class="cart_price">
+                                 <p>{{ order.order_total }}</p>
+                              </td>
+                              <td class="cart_total">
+                                 <a class="btn btn-primary" href="{{ order.get_absolute_url }}"><i class="fa fa-shopping-cart"></i>Get Details</a>
+                              </td>
+                           </tr>
+                           {% endfor %}
+                        </tbody>
+                     </table>
+                  </div>
+                  </section>
+               </div>
+            </div>
+            <div id="div_creditcard" class="features_items" style="display: none">
+               <div class="shopper-info">
+                  <div class="features_items">
+                  <p>My Credit Cards</p>
+                  <section id="cart_items">
+                  <div class="table-responsive cart_info">
+                     <table class="table table-condensed">
+                        <thead>
+                           <tr class="cart_menu">
+                              <td class="image">Type</td>
+                              <td class="description">Card Number</td>
+                              <td class="total">Is default</td>
+                              <!--<td class="quantity">Quantity</td>-->
+                              <!--<td class="total">Total</td>-->
+                              <td class="description">Actions</td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td class="cart_product">
+                                 <p>Visa</p>
+                              </td>
+                              <td class="cart_description">
+                                 <p> 41111*****1111</p>
+                              </td>
+                              <td class="cart_price">
+                                 <p>Yes</p>
+                              </td>
+                              <td class="cart_price">
+                                 <a href="#">Edit</a>
+                                  <a href="#">Delete</a>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  </section>
+               </div>
+               </div>
+            </div>
+            <div id="div_wishlist" class="features_items" style="display: none">
+               <div class="shopper-info">
+                  <p>Shopper wishlists</p>
+                      {% if wishlists%}
+   <section id="cart_items">
+   <div class="shopper-info">
+      <p> My Wishlist</p>
+      <div class="table-responsive cart_info">
+         <table class="table table-condensed">
+            <thead>
+               <tr class="cart_menu">
+                  <td class="image">Item Id</td>
+                  <td class="description">Get Details</td>
+               </tr>
+            </thead>
+            <tbody>
+               {% for wishlist_item in wishlists %}
+               <tr>
+                  <td class="cart_product">
+                     <p>Web ID: {{ wishlist_item.item_id }}</p>
+                  </td>
+                  <td class="cart_total">
+                     <ul class="nav nav-pills nav-justified">
+                        <li>
+                           <p><a class="btn btn-primary" href="{{ wishlist_item.get_absolute_url }}"><i class="fa fa-shopping-cart"></i>Get Details</a></p>
+                        </li>
+                        <li>
+                           <form action="/en/wishlist/{{wishlist_item.id}}/remove/" method="post">{% csrf_token %}
+                              <button type="submit" class="btn btn-primary">remove</button>
+                           </form>
+                        </li>
+                  </td>
+                  </ul>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+      <a href="/">Add more item to wishlist</a>
+   </div>
+   {% else %}
+   <p>No items in wishlist</p>
+   <a href="/">Add item to wishlist</a>
+   {% endif %}
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<script type="text/javascript">
+   function dashboard(){
+       $('#div_dashboard').show();
+       $('#div_information').hide();
+       $('#div_address').hide();
+       $('#div_orders').hide();
+       $('#div_creditcard').hide();
+       $('#div_wishlist').hide();
+   }
+   function information(){
+       //alert("hello");
+       $('#div_dashboard').hide();
+       $('#div_information').show();
+       $('#div_address').hide();
+       $('#div_orders').hide();
+       $('#div_creditcard').hide();
+       $('#div_wishlist').hide();
+   }
+   function address(){
+       $('#div_dashboard').hide();
+       $('#div_information').hide();
+       $('#div_address').show();
+       $('#div_orders').hide();
+       $('#div_creditcard').hide();
+       $('#div_wishlist').hide();
+   }
+   function orders(){
+       $('#div_dashboard').hide();
+       $('#div_information').hide();
+       $('#div_address').hide();
+       $('#div_orders').show();
+       $('#div_creditcard').hide();
+       $('#div_wishlist').hide();
+   }
+   function creditcard(){
+       $('#div_dashboard').hide();
+       $('#div_information').hide();
+       $('#div_address').hide();
+       $('#div_orders').hide();
+       $('#div_creditcard').show();
+       $('#div_wishlist').hide();
+   }
+   function wishlist(){
+       $('#div_dashboard').hide();
+       $('#div_information').hide();
+       $('#div_address').hide();
+       $('#div_orders').hide();
+       $('#div_creditcard').hide();
+       $('#div_wishlist').show();
+   }
+</script>
+{% endblock %}

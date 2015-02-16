@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load cms_tags staticfiles sekizai_tags menu_tags %}
+
+{% block content %}
+	<section id="form"><!--form-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="signup-form"><!--sign up form-->
+						<h2>New User Signup!</h2>
+						<form method="post" action="{% url 'account_signup' %}">
+							{% csrf_token %}
+                            {{ user_form.as_p }}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}" />
+                            <button type="submit" class="btn btn-default">Submit</button>
+						</form><br>
+                        <label class="signup"><a href="{% url 'account_login' %}">Go back to Login page</a></label>
+					</div><!--/sign up form-->
+
+				</div>
+			</div>
+		</div>
+	</section><!--/form-->
+
+{% endblock %}

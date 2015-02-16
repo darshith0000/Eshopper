@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load cms_tags staticfiles sekizai_tags menu_tags %}
+{% load shop_tags %}
+{% block content %}
+
+Logged out
+
+{% endblock %}

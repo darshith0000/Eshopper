@@ -1,0 +1,11 @@
+from django.http import HttpResponseRedirect
+from shop.models import Product
+# from shop.models import CartItem
+
+class MiddlewareProduct(object):
+
+    def process_request(self, request):
+        print "in the middleware class"
+        request.products = Product.objects.all()
+
+        return None

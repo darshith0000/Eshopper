@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load cms_tags staticfiles sekizai_tags menu_tags %}
+{% load shop_tags %}
+{% block content %}
+
+<!--/register-req-->
+<div class="shopper-informations">
+   <div class="row">
+      <div class="col-sm-3">
+         <div class="shopper-info">
+            <p>Shopper Information</p>
+            <form>
+               <input type="text" placeholder="Display Name">
+               <input type="text" placeholder="User Name">
+               <input type="password" placeholder="Password">
+               <input type="password" placeholder="Confirm password">
+            </form>
+            <a class="btn btn-primary" href="">Get Quotes</a>
+            <a class="btn btn-primary" href="#">Continue</a>
+         </div>
+      </div>
+      <div class="col-sm-5 clearfix">
+         <div class="bill-to">
+            <form method="POST">
+               {% csrf_token %}
+               <div class="form-one">
+                  {{ shipping_address.as_p }}
+               </div>
+               <div class="form-two">
+                  {{ billing_address.as_p }}
+               </div>
+               <h3>Payment and Shipping Methods</h3>
+               {{ billing_shipping_form.as_p }}
+               <h3>Extra info</h3>
+               {{ extra_info_form.as_p }}
+               <div style="float: right">
+                  <button type="submit" class="btn btn-primary">Checkout</button>
+               </div>
+            </form>
+         </div>
+      </div>
+      <div class="col-sm-4">
+         <div class="order-message">
+            <p>Shipping Order</p>
+            <textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="5"></textarea>
+         </div>
+      </div>
+   </div>
+</div>
+
+</section> <!--/#cart_items-->
+{% endblock %}

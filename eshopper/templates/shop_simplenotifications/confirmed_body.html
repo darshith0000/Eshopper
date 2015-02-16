@@ -1,0 +1,50 @@
+<html>
+
+<head>
+Dear Shop-Owner,
+<br><br>
+A customer just placed a new order.
+<br>
+<body>
+<p> Your {{ order }}</p>
+<table class="table table-condensed" border="1" style="width:100%">
+            <thead>
+               <tr class="cart_menu">
+                  <td class="description">Item</td>
+                  <td class="price">Price</td>
+                  <td class="quantity">Quantity</td>
+                  <td class="total">Total</td>
+                  <td></td>
+               </tr>
+            </thead>
+            <tbody>
+		{% for x in order.items.all %}
+		<tr>
+                  <td class="cart_description">
+                     <h4>{{ x.product_name }}</h4>
+                  </td>
+                  <td class="cart_price">
+                     <p>{{ x.unit_price }}</p>
+                  </td>
+                  <td class="cart_quantity">
+                     <div class="class_quantity_button">
+                        <p>{{ x.quantity }}</p>
+                     </div>
+                  </td>
+                  <td class="cart_total">
+                     <p class="cart_total_price">{{ x.line_total }}</p>
+                  </td>
+               </tr>
+               {% endfor %}
+	    </tbody>
+</table>
+ 
+</body>
+<br>
+Thanks, 
+Eshopper.
+
+</head>
+</html>
+
+            

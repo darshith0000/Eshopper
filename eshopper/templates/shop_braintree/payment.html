@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load cms_tags staticfiles sekizai_tags menu_tags %}
+{% load shop_tags %}
+{% block content %}
+<div class="shopper-informations">
+<div class="row">
+<div class="col-sm-4">
+<div class="total_area">
+<form id="braintree-payment-form" method="POST">
+    {% csrf_token %}
+    <ul>
+        {{ form.as_ul }}
+        <button type="submit" class="btn btn-primary" style="float: right">Submit</button>
+    </ul>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<script src="https://js.braintreegateway.com/v1/braintree.js"></script>
+<script>
+    var braintree = Braintree.create("{{ cse_key }}");
+    braintree.onSubmitEncryptForm('braintree-payment-form');
+</script>
+{% endblock %}
+

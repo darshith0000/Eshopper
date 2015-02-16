@@ -1,0 +1,16 @@
+Dear Shop-Owner,
+
+A customer just placed a new order.
+
+Thanks, 
+Eshopper.
+
+
+<html>
+<body>
+<p>New order has been placed</p>
+<p>Thanks</p>
+</body>
+</html>
+
+

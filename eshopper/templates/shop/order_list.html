@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load cms_tags staticfiles sekizai_tags menu_tags %}
+{% load shop_tags %}
+{% block content %}
+  <ul>
+    <h1><b><u>Order History List</u></b></h1>
+  </ul>
+  <section id="cart_items">
+                  <div class="table-responsive cart_info">
+                     <table class="table table-condensed">
+                        <thead>
+                           <tr class="cart_menu">
+                              <td class="image">Order Id</td>
+                              <td class="description">Date&Time</td>
+                              <td class="total">Total</td>
+                              <!--<td class="quantity">Quantity</td>-->
+                              <!--<td class="total">Total</td>-->
+                              <td class="description">Get Details</td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for order in object_list %}
+                           <tr>
+                              <td class="cart_product">
+                                 <p>Web ID: {{ order.id }}</p>
+                              </td>
+                              <td class="cart_description">
+                                 <p> {{ order.modified }}</p>
+                              </td>
+                              <td class="cart_price">
+                                 <p>{{ order.order_total }}</p>
+                              </td>
+                              <td class="cart_total">
+                                 <a class="btn btn-primary" href="{{ order.get_absolute_url }}"><i class="fa fa-shopping-cart"></i>Get Details</a>
+                              </td>
+                           </tr>
+                           {% endfor %}
+                        </tbody>
+                     </table>
+                  </div>
+                  </section>
+{% endblock %}
+
